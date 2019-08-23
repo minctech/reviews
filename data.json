@@ -1,0 +1,21 @@
+[
+  {
+    "user": {
+      "id": 17,
+      "pic": "https://s3.amazonaws.com/uifaces/faces/twitter/cloudstudio/128.jpg",
+      "name": "Anthony"
+      },
+    "review": {
+      "id": 3,
+      "date": "August 2019",
+      "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut sem ultricies, ornare quam at, scelerisque lorem. Nulla nisl purus, venenatis non nunc vitae, commodo sodales quam. Nulla eu nisi a lacus pharetra placerat nec ac leo. Ut dapibus varius augue at eleifend. Morbi placerat feugiat sem, non lacinia ante pellentesque id.",
+      "accuracy": 5,
+      "communication": 4,
+      "cleanliness": 3,
+      "location": 4,
+      "checkin": 3,
+      "value": 5,
+      "overall": 4
+      }
+  }
+]
