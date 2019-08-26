@@ -14,4 +14,18 @@ connection.query('SELECT 1 + 1 AS solution', (error, results, fields) => {
   console.log('The solution is: ', results[0].solution);
 });
 
-module.exports = connection;
+// here is where your query functions with callbacks go
+const getAllListings = function (callback) {
+  connection.query('SELECT * FROM listings', (error, results, fields) => {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+module.exports = {
+  connection,
+  getAllListings,
+};
