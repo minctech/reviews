@@ -25,7 +25,18 @@ const getAllListings = function (callback) {
   });
 };
 
+const getListingReviews = function (listingID, callback) {
+  connection.query(`SELECT * FROM reviews WHERE listings_id = ${listingID}`, (error, results, fields) => {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 module.exports = {
   connection,
   getAllListings,
+  getListingReviews,
 };
