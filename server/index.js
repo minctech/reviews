@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const db = require('../database/index.js');
 
-app.use(express.static(`${__dirname}/../client/dist`));
+app.use('/listings/:listing_id/reviews', express.static(`${__dirname}/../client/dist`));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,7 +24,6 @@ app.get('/api/listings', (req, res) => {
 });
 
 app.get('/api/listings/:listing_id/reviews', (req, res) => {
-  console.log(req.params.listing_id);
   const listingID = req.params.listing_id;
   db.getListingReviews(listingID, (error, data) => {
     if (error) {
