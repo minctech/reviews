@@ -4,14 +4,14 @@ const db = require('./index.js');
 const five = 5;
 const hundred = 100;
 const randomInt = function (max) {
-  let num = Math.floor(Math.random() * max);
+  let num = Math.ceil(Math.random() * max);
   // all IDs start at 1 and not 0
   if (num < 1) {
     num = 1;
   }
 
-  // I'm assuming no ratings will be lower than 3 stars
-  if (max === five && num < 3) {
+  // I'm assuming no ratings will be lower than 2 stars
+  if (max === five && num < 2) {
     return randomInt(max);
   }
 
@@ -26,7 +26,7 @@ for (let i = 0; i < hundred; i++) {
     host_name: `"${faker.name.firstName()}"`,
   };
 
-  db.query('INSERT INTO listings SET ?', listing, (error, results, fields) => {
+  db.connection.query('INSERT INTO listings SET ?', listing, (error, results, fields) => {
     if (error) {
       console.log('LISTING INSERT ERROR:');
       console.log(error);
@@ -41,7 +41,7 @@ for (let i = 0; i < hundred; i++) {
     name: `"${faker.name.firstName()}"`,
   };
 
-  db.query('INSERT INTO users SET ?', user, (error, results, fields) => {
+  db.connection.query('INSERT INTO users SET ?', user, (error, results, fields) => {
     if (error) {
       console.log('USER INSERT ERROR:');
       console.log(error);
@@ -55,7 +55,7 @@ for (let i = 0; i < hundred; i++) {
     comment: `"${faker.lorem.paragraph()}"`,
   };
 
-  db.query('INSERT INTO responses SET ?', response, (error, results, fields) => {
+  db.connection.query('INSERT INTO responses SET ?', response, (error, results, fields) => {
     if (error) {
       console.log('RESPONSE INSERT ERROR:');
       console.log(error);
@@ -81,7 +81,7 @@ for (let i = 0; i < 2100; i++) {
     responses_id: `${randomInt(hundred)}` < 25 ? `${randomInt(hundred)}` : null,
   };
 
-  db.query('INSERT INTO reviews SET ?', review, (error, results, fields) => {
+  db.connection.query('INSERT INTO reviews SET ?', review, (error, results, fields) => {
     if (error) {
       console.log('RESPONSE INSERT ERROR:');
       console.log(error);
@@ -93,4 +93,4 @@ for (let i = 0; i < 2100; i++) {
 
 console.log('seeder running');
 
-db.end();
+db.connection.end();
