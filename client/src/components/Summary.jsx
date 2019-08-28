@@ -11,7 +11,7 @@ class Summary extends React.Component {
     return(
       <div>
         <div>
-          {this.props.states.reviews.length} Reviews
+          <span id="summary-reviews">{this.props.states.reviews.length} Reviews</span>
           <StarRatings
             rating={this.props.states.overall}
             starRatedColor="rgb(0, 132, 137)"

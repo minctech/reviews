@@ -23,6 +23,7 @@ class ReviewsModule extends React.Component {
     };
   }
 
+  //make a function to filter reviews based on state's search string
   handleSearchSubmit() {
     let input = $('#search-reviews').val();
     console.log(input);
@@ -97,5 +98,5 @@ class ReviewsModule extends React.Component {
     )
   }
 }
-//make a function to filter reviews based on state's search string
+
 ReactDOM.render(<ReviewsModule />, document.getElementById('reviews'));
