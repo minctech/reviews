@@ -18,12 +18,14 @@ const randomInt = function (max) {
   return num;
 };
 
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 for (let i = 0; i < hundred; i++) {
   // seed listings table
   const listing = {
-    name: `"${faker.lorem.words()}"`,
-    host_pic: `"${faker.image.avatar()}"`,
-    host_name: `"${faker.name.firstName()}"`,
+    name: `${faker.lorem.words()}`,
+    host_pic: `${faker.image.avatar()}`,
+    host_name: `${faker.name.firstName()}`,
   };
 
   db.connection.query('INSERT INTO listings SET ?', listing, (error, results, fields) => {
@@ -37,8 +39,8 @@ for (let i = 0; i < hundred; i++) {
 
   // seed users table
   const user = {
-    pic: `"${faker.image.avatar()}"`,
-    name: `"${faker.name.firstName()}"`,
+    pic: `${faker.image.avatar()}`,
+    name: `${faker.name.firstName()}`,
   };
 
   db.connection.query('INSERT INTO users SET ?', user, (error, results, fields) => {
@@ -52,7 +54,7 @@ for (let i = 0; i < hundred; i++) {
 
   // seed responses table
   const response = {
-    comment: `"${faker.lorem.paragraph()}"`,
+    comment: `${faker.lorem.paragraph()}`,
   };
 
   db.connection.query('INSERT INTO responses SET ?', response, (error, results, fields) => {
@@ -67,11 +69,14 @@ for (let i = 0; i < hundred; i++) {
 
 for (let i = 0; i < 2100; i++) {
   // seed reviews table
+  let reviewDate = new Date(`${faker.date.past().toString()}`);
+  reviewDate = `${months[reviewDate.getMonth()]} ${reviewDate.getFullYear()}`;
+
   const review = {
     listings_id: `${randomInt(hundred)}`,
     users_id: `${randomInt(hundred)}`,
-    date: `"${faker.date.past().toString()}"`,
-    comment: `"${faker.lorem.paragraph()}"`,
+    date: reviewDate,
+    comment: `${faker.lorem.paragraph()}`,
     accuracy: `${randomInt(five)}`,
     communication: `${randomInt(five)}`,
     cleanliness: `${randomInt(five)}`,

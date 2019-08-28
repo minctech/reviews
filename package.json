@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "jest": {
-    "setupFilesAfterEnv": [
-      "<rootDir>client/src/setupTests.js"
-    ],
+    "setupFilesAfterEnv": ["<rootDir>tests/setupTests.js"],
     "clearMocks": true,
     "coverageDirectory": "coverage",
     "testEnvironment": "node",
@@ -13,9 +11,7 @@
       "js",
       "jsx"
     ],
-    "moduleDirectories": [
-      "node_modules"
-    ],
+    "moduleDirectories": ["node_modules"],
     "verbose": true
   },
   "main": "index.js",
@@ -25,10 +21,10 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "react-dev": "webpack -d --watch",
+    "react-dev": "webpack -d --watch --mode=development",
     "server-dev": "nodemon server/index.js",
     "seeder": "node database/seeder.js",
-    "test": "npx jest --coverage"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -67,6 +63,7 @@
     "jest": "^24.9.0",
     "jest-environment-enzyme": "^7.1.0",
     "jest-enzyme": "^7.1.0",
+    "prop-types": "^15.7.2",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7"
   }
