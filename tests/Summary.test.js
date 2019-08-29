@@ -15,7 +15,7 @@ describe('Summary component', () => {
     location: 4,
     checkin: 5,
     value: 3,
-    overall: 4,
+    overall: 4
   };
 
   it('renders successfully', () => {
@@ -32,7 +32,7 @@ describe('Summary component', () => {
     expect(wrapper.find(StarRatings)).toHaveLength(7);
   });
 
-  it('displays the overall accuracy', () => {
+  it('displays the total # of reviews by looking at props', () => {
 
   });
 });

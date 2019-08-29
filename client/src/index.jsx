@@ -9,27 +9,35 @@ class ReviewsModule extends React.Component {
     super(props);
 
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+    this.handleBackToAllReviews = this.handleBackToAllReviews.bind(this);
 
     this.state = {
-      reviews: [],      //arr of all reviews for a particular listing, can use length to show total # reviews
-      search: '',       //used to filter reviews
-      accuracy: 0,      //average of all accuracy ratings
-      communication: 0, //average of all communication ratings
-      cleanliness: 0,   //average of all cleanliness ratings
-      location: 0,      //average of all location ratings
-      checkin: 0,       //average of all checkin ratings
-      value: 0,         //average of all value ratings
-      overall: 0        //average of all the averages
+      reviews: [],          //arr of all reviews for a particular listing, can use length to show total # reviews
+      filteredReviews: [],  //arr of filtered reviews based on search bar,
+      search: '',            //used to filter reviews
+      accuracy: 0,          //average of all accuracy ratings
+      communication: 0,     //average of all communication ratings
+      cleanliness: 0,       //average of all cleanliness ratings
+      location: 0,          //average of all location ratings
+      checkin: 0,           //average of all checkin ratings
+      value: 0,             //average of all value ratings
+      overall: 0            //average of all the averages
     };
   }
 
   //make a function to filter reviews based on state's search string
-  handleSearchSubmit() {
+  handleSearchSubmit(e) {
+    e.preventDefault();
     let input = $('#search-reviews').val();
-    console.log(input);
-    this.setState((prevState) => {
-      return {search: input}
-    });
+    let filter = this.state.reviews.filter(review => review.comment.includes(input));
+    this.setState(prevState => ({
+      filteredReviews: filter,
+      search: input
+    }));
+  }
+
+  handleBackToAllReviews() {
+    this.setState({filteredReviews: []});
   }
 
   componentDidMount() {
@@ -61,12 +69,12 @@ class ReviewsModule extends React.Component {
       });
       let numReviews = this.state.reviews.length;
       this.setState({
-        accuracy: Math.round(accuracy / numReviews),
-        communication: Math.round(communication / numReviews),
-        cleanliness: Math.round(cleanliness / numReviews),
-        location: Math.round(location / numReviews),
-        checkin: Math.round(checkin / numReviews),
-        value: Math.round(value / numReviews)
+        accuracy: Math.round(accuracy / numReviews * 2) / 2,
+        communication: Math.round(communication / numReviews * 2) / 2,
+        cleanliness: Math.round(cleanliness / numReviews * 2) / 2,
+        location: Math.round(location / numReviews * 2) / 2,
+        checkin: Math.round(checkin / numReviews * 2) / 2,
+        value: Math.round(value / numReviews * 2) / 2
       })
     })
     .then(() => {
@@ -79,7 +87,7 @@ class ReviewsModule extends React.Component {
         this.state.checkin +
         this.state.value;
       this.setState({
-        overall: Math.round(overall / 6)
+        overall: Math.round(overall / 6 * 2) / 2
       });
     })
     .catch(function(error) {
@@ -92,7 +100,14 @@ class ReviewsModule extends React.Component {
     return (
       <div>
         <div>
-          <Summary states={this.state} searchSubmit={this.handleSearchSubmit} />
+          <Summary
+            states={this.state}
+            searchSubmit={this.handleSearchSubmit}
+            backToAllReviews={this.handleBackToAllReviews}
+          />
+        </div>
+        <div>
+          {/* <ReviewList reviews={this.state.reviews} /> */}
         </div>
       </div>
     )
