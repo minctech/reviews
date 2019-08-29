@@ -7,13 +7,16 @@ class Search extends React.Component {
 
   render() {
     return (
-      <input
-        type="search"
-        name="search-reviews"
-        id="search-reviews"
-        placeholder="Search Reviews"
-        onChange={this.props.searchSubmit} //NEED TO CHANGE THIS TO onSubmit or some way of using Enter to submit
-      />
+      <span>
+        <form onSubmit={this.props.searchSubmit} autoComplete="off">
+          <input
+            type="search"
+            name="search-reviews"
+            id="search-reviews"
+            placeholder="Search reviews"
+          />
+        </form>
+      </span>
     )
   }
 }
