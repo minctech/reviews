@@ -76,7 +76,7 @@ class Summary extends React.Component {
     if (this.props.states.filteredReviews.length > 0) {
       let guestGrammar = this.props.states.filteredReviews.length === 1 ? 'guest has' : 'guests have';
       summaryInfo = (
-        <div>
+        <div id="filtered-search">
           {this.props.states.filteredReviews.length} {guestGrammar} mentioned "{this.props.states.search}"
           <span onClick={this.props.backToAllReviews}>Back to all reviews</span>
         </div>

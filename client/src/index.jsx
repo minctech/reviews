@@ -38,6 +38,7 @@ class ReviewsModule extends React.Component {
 
   handleBackToAllReviews() {
     this.setState({filteredReviews: []});
+    $('#search-reviews').val('');
   }
 
   componentDidMount() {
