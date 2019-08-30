@@ -11,18 +11,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/listings', (req, res) => {
-  db.getAllListings((error, data) => {
-    if (error) {
-      console.log('SERVER GET ALL LISTINGS ERROR: ', error);
-      res.status(500).send(error);
-    } else {
-      console.log('SERVER GET ALL LISTINGS SUCCESS');
-      res.status(200).send(data);
-    }
-  });
-});
-
 app.get('/api/listings/:listing_id/reviews', (req, res) => {
   const listingID = req.params.listing_id;
   db.getListingReviews(listingID, (error, data) => {
@@ -31,6 +19,45 @@ app.get('/api/listings/:listing_id/reviews', (req, res) => {
       res.status(500).send(error);
     } else {
       console.log('SERVER GET LISTING REVIEWS SUCCESS');
+      res.status(200).send(data);
+    }
+  });
+});
+
+app.get('/api/listings/:listing_id/host', (req, res) => {
+  const listingID = req.params.listing_id;
+  db.getListingHost(listingID, (error, data) => {
+    if (error) {
+      console.log('SERVER GET LISTING HOST ERROR: ', error);
+      res.status(500).send(error);
+    } else {
+      console.log('SERVER GET LISTING HOST SUCCESS');
+      res.status(200).send(data);
+    }
+  });
+});
+
+app.get('/api/listings/users/:user_id', (req, res) => {
+  const userID = req.params.user_id;
+  db.getReviewUser(userID, (error, data) => {
+    if (error) {
+      console.log('SERVER GET REVIEW USER ERROR: ', error);
+      res.status(500).send(error);
+    } else {
+      console.log('SERVER GET REVIEW USER SUCCESS');
+      res.status(200).send(data);
+    }
+  });
+});
+
+app.get('/api/listings/review/response/:response_id', (req, res) => {
+  const responseID = req.params.response_id;
+  db.getReviewResponse(responseID, (error, data) => {
+    if (error) {
+      console.log('SERVER GET REVIEW RESPONSE ERROR: ', error);
+      res.status(500).send(error);
+    } else {
+      console.log('SERVER GET REVIEW RESPONSE SUCCESS');
       res.status(200).send(data);
     }
   });

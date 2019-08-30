@@ -42,10 +42,4 @@ CREATE TABLE reviews (
 
 /*  Execute this file from the command line by typing:
  *    mysql -u <USER> -p < schema.sql
-
-  RESPONSE INSERT ERROR:
-    Error: ER_NO_REFERENCED_ROW_2: Cannot add or update a child row: a foreign key constraint fails (`reviewsmodule`.`reviews`, CONSTRAINT `reviews_ibfk_3` FOREIGN KEY (`responses_id`) REFERENCES `responses` (`id`))
-      at Query.Sequence._packetToError (/mnt/c/Users/ANTHONY/hrsf122/reviews/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
-
-    sqlMessage: 'Cannot add or update a child row: a foreign key constraint fails (`reviewsmodule`.`reviews`, CONSTRAINT `reviews_ibfk_3` FOREIGN KEY (`responses_id`) REFERENCES `responses` (`id`))',
 */
