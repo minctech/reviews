@@ -4,7 +4,7 @@ import Summary from '../client/src/components/Summary.jsx';
 import StarRatings from 'react-star-ratings';
 
 describe('Summary component', () => {
-  const allStates = {
+  const states = {
     reviews: [{}, {}],
     filteredReviews: [],
     search: '',
@@ -44,22 +44,22 @@ describe('Summary component', () => {
   };
 
   it('renders successfully', () => {
-    shallow(<Summary states={allStates} />);
+    shallow(<Summary allStates={states} />);
   });
 
   it('displays the total # of reviews', () => {
-    const wrapper = shallow(<Summary states={allStates} />);
+    const wrapper = shallow(<Summary allStates={states} />);
     expect(wrapper.find('#summary-reviews').text()).toEqual('2 Reviews');
   });
 
   it('renders 7 <StarRatings /> components', () => {
-    const wrapper = shallow(<Summary states={allStates} />);
+    const wrapper = shallow(<Summary allStates={states} />);
     expect(wrapper.find(StarRatings)).toHaveLength(7);
   });
 
   it('displays how many people have mentioned the searched term', () => {
-    const wrapper1 = shallow(<Summary states={filtered1States} />);
-    const wrapper3 = shallow(<Summary states={filtered3States} />);
+    const wrapper1 = shallow(<Summary allStates={filtered1States} />);
+    const wrapper3 = shallow(<Summary allStates={filtered3States} />);
     expect(wrapper1.find('#filtered-search').text()).toEqual('1 guest has mentioned "hello1"Back to all reviews');
     expect(wrapper3.find('#filtered-search').text()).toEqual('3 guests have mentioned "hello3"Back to all reviews');
   });

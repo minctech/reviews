@@ -28,7 +28,6 @@ class ReviewEntry extends React.Component {
     if (responseID) {
       axios.get(`/api/listings/review/response/${responseID}`)
       .then(reviewResponse => {
-        console.log(reviewResponse.data[0].comment)
         this.setState({
           response: reviewResponse.data[0].comment
         })
