@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import $ from 'jquery';
 import Summary from './components/Summary.jsx';
+import ReviewList from './components/ReviewList.jsx';
 
 class ReviewsModule extends React.Component {
   constructor(props) {
@@ -13,15 +14,17 @@ class ReviewsModule extends React.Component {
 
     this.state = {
       reviews: [],          //arr of all reviews for a particular listing, can use length to show total # reviews
-      filteredReviews: [],  //arr of filtered reviews based on search bar,
-      search: '',            //used to filter reviews
+      filteredReviews: [],  //arr of filtered reviews based on search bar
+      search: '',           //used to filter reviews
       accuracy: 0,          //average of all accuracy ratings
       communication: 0,     //average of all communication ratings
       cleanliness: 0,       //average of all cleanliness ratings
       location: 0,          //average of all location ratings
       checkin: 0,           //average of all checkin ratings
       value: 0,             //average of all value ratings
-      overall: 0            //average of all the averages
+      overall: 0,           //average of all the averages
+      host: {}              //listing's hosts's info (pic and name)
+
     };
   }
 
@@ -45,11 +48,10 @@ class ReviewsModule extends React.Component {
     //1. get all the reviews for a particular listing
     let listingID = window.location.href.split('/')[4];
     axios.get(`/api/listings/${listingID}/reviews`)
-    .then((data) => {
+    .then(listingReviews => {
       //2. update the reviews state
-      console.log(`AXIOS GOT LISTING ${listingID}'S REVIEWS`);
       this.setState({
-        reviews: data.data
+        reviews: listingReviews.data
       });
     })
     .then(() => {
@@ -91,8 +93,19 @@ class ReviewsModule extends React.Component {
         overall: Math.round(overall / 6 * 2) / 2
       });
     })
-    .catch(function(error) {
-      console.log('AXIOS CATCH ERROR:');
+    .catch(error => {
+      console.log(`AXIOS GET LISTING ${listingID}'S REVIEWS ERROR:`);
+      console.log(error);
+    })
+
+    axios.get(`/api/listings/${listingID}/host`)
+    .then(listingHost => {
+      this.setState({
+          host: listingHost.data[0]
+      });
+    })
+    .catch(error => {
+      console.log(`AXIOS GET LISTING ${listingID}'S HOST ERROR:`);
       console.log(error);
     })
   }
@@ -102,13 +115,13 @@ class ReviewsModule extends React.Component {
       <div>
         <div>
           <Summary
-            states={this.state}
+            allStates={this.state}
             searchSubmit={this.handleSearchSubmit}
             backToAllReviews={this.handleBackToAllReviews}
           />
         </div>
         <div>
-          {/* <ReviewList reviews={this.state.reviews} /> */}
+          <ReviewList allStates={this.state} />
         </div>
       </div>
     )

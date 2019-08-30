@@ -14,17 +14,6 @@ connection.query('SELECT 1 + 1 AS solution', (error, results, fields) => {
   console.log('The solution is: ', results[0].solution);
 });
 
-// here is where your query functions with callbacks go
-const getAllListings = function (callback) {
-  connection.query('SELECT * FROM listings', (error, results, fields) => {
-    if (error) {
-      callback(error);
-    } else {
-      callback(null, results);
-    }
-  });
-};
-
 const getListingReviews = function (listingID, callback) {
   connection.query(`SELECT * FROM reviews WHERE listings_id = ${listingID}`, (error, results, fields) => {
     if (error) {
@@ -35,8 +24,40 @@ const getListingReviews = function (listingID, callback) {
   });
 };
 
+const getListingHost = function (listingID, callback) {
+  connection.query(`SELECT host_pic, host_name FROM listings WHERE id = ${listingID}`, (error, results, fields) => {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+const getReviewUser = function (userID, callback) {
+  connection.query(`SELECT * FROM users WHERE id = ${userID}`, (error, results, fields) => {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+const getReviewResponse = function (responseID, callback) {
+  connection.query(`SELECT * FROM responses WHERE id = ${responseID}`, (error, results, fields) => {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 module.exports = {
   connection,
-  getAllListings,
   getListingReviews,
+  getListingHost,
+  getReviewUser,
+  getReviewResponse,
 };
