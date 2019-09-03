@@ -4,6 +4,14 @@ import axios from 'axios';
 import $ from 'jquery';
 import Summary from './components/Summary.jsx';
 import ReviewList from './components/ReviewList.jsx';
+import styled from 'styled-components';
+
+const BaseStyle = styled.div`
+  width: 648px;
+  color: #484848;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+  padding: 0 0 0 10%;
+`;
 
 class ReviewsModule extends React.Component {
   constructor(props) {
@@ -112,18 +120,14 @@ class ReviewsModule extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <Summary
-            allStates={this.state}
-            searchSubmit={this.handleSearchSubmit}
-            backToAllReviews={this.handleBackToAllReviews}
-          />
-        </div>
-        <div>
-          <ReviewList allStates={this.state} />
-        </div>
-      </div>
+      <BaseStyle>
+        <Summary
+          allStates={this.state}
+          searchSubmit={this.handleSearchSubmit}
+          backToAllReviews={this.handleBackToAllReviews}
+        />
+        <ReviewList allStates={this.state} />
+      </BaseStyle>
     )
   }
 }
