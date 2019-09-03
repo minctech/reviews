@@ -47,6 +47,12 @@ const ValueRating = styled.span`
   padding: 10px 145px 10px 25px;
 `;
 
+const BackToAllReviews = styled.span`
+  float: right;
+  color: #008489;
+  font-size: 14px;
+`;
+
 class Summary extends React.Component {
   constructor(props) {
     super(props);
@@ -122,8 +128,8 @@ class Summary extends React.Component {
       let guestGrammar = this.props.allStates.filteredReviews.length === 1 ? 'guest has' : 'guests have';
       summaryInfo = (
         <div id="filtered-search">
-          {this.props.allStates.filteredReviews.length} {guestGrammar} mentioned "{this.props.allStates.search}"
-          <span onClick={this.props.backToAllReviews}>Back to all reviews</span>
+          {this.props.allStates.filteredReviews.length} {guestGrammar} mentioned "<b>{this.props.allStates.search}</b>"
+          <BackToAllReviews onClick={this.props.backToAllReviews}>Back to all reviews</BackToAllReviews>
         </div>
       );
     }

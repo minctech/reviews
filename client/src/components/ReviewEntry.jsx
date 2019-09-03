@@ -46,14 +46,27 @@ const ResponseDate = styled.div`
   color: #888;
 `;
 
+const ReadMore = styled.span`
+  color: #008489;
+`;
+
 class ReviewEntry extends React.Component {
   constructor(props) {
     super(props);
 
+    this.readMore = this.readMore.bind(this);
+
     this.state = {
       user: {},
-      response: ''
+      response: '',
+      commentExpanded: false
     };
+  }
+
+  readMore() {
+    this.setState({
+      commentExpanded: true
+    })
   }
 
   componentDidMount() {
@@ -104,6 +117,22 @@ class ReviewEntry extends React.Component {
         </ResponseBlock>
     }
 
+    let comment = <span>{this.props.reviewEntry.comment}</span>
+    if (this.props.reviewEntry.comment.length > 200) {
+      comment =
+        <span>
+          <span>
+            {this.props.reviewEntry.comment.slice(0, 200)}...
+          </span>
+          <ReadMore onClick={this.readMore}>
+            Read more
+          </ReadMore>
+        </span>
+    }
+    if (this.state.commentExpanded) {
+      comment = <span>{this.props.reviewEntry.comment}</span>
+    }
+
     return(
       <Block>
         <div>
@@ -118,7 +147,7 @@ class ReviewEntry extends React.Component {
           </NameDate>
         </div>
         <div>
-          {this.props.reviewEntry.comment}
+          {comment}
         </div>
         <div>
           {response}
