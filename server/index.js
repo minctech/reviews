@@ -6,6 +6,11 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const db = require('../database/index.js');
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 app.use('/listings/:listing_id/reviews', express.static(`${__dirname}/../client/dist`));
 app.use(morgan('dev'));
 app.use(bodyParser.json());

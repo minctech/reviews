@@ -55,7 +55,7 @@ class ReviewsModule extends React.Component {
   componentDidMount() {
     //1. get all the reviews for a particular listing
     let listingID = window.location.href.split('/')[4];
-    axios.get(`/api/listings/${listingID}/reviews`)
+    axios.get(`http://localhost:3210/api/listings/${listingID}/reviews`)
     .then(listingReviews => {
       //2. update the reviews state
       this.setState({
@@ -106,7 +106,7 @@ class ReviewsModule extends React.Component {
       console.log(error);
     })
 
-    axios.get(`/api/listings/${listingID}/host`)
+    axios.get(`http://localhost:3210/api/listings/${listingID}/host`)
     .then(listingHost => {
       this.setState({
           host: listingHost.data[0]
