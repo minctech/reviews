@@ -54,7 +54,7 @@ class ReviewsModule extends React.Component {
 
   componentDidMount() {
     //1. get all the reviews for a particular listing
-    let listingID = window.location.href.split('/')[4];
+    let listingID = window.location.href.split('/').reverse()[1];
     axios.get(`http://localhost:3210/api/listings/${listingID}/reviews`)
     .then(listingReviews => {
       //2. update the reviews state
