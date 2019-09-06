@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 
 const Block = styled.div`
   padding: 25px 0 0 0;

@@ -4,7 +4,6 @@ import axios from 'axios';
 import $ from 'jquery';
 import Summary from './components/Summary.jsx';
 import ReviewList from './components/ReviewList.jsx';
-import styled from 'styled-components';
 
 const BaseStyle = styled.div`
   width: 648px;

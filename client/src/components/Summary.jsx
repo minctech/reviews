@@ -1,7 +1,6 @@
 import React from 'react';
 import StarRatings from 'react-star-ratings';
 import Search from './Search.jsx';
-import styled from 'styled-components';
 
 const Block = styled.div`
   padding: 20px 0;
