@@ -17,4 +17,4 @@ RUN npm install
 EXPOSE 3000
 
 # How do you start your app?
-CMD ["npm", "run", "server-dev && npm run seeder"]
+CMD ["npm", "run", "server-dev"]
