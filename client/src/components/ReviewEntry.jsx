@@ -13,12 +13,14 @@ const ResponseBlock = styled.div`
 
 const ProfilePic = styled.img`
   width: 50px;
+  min-width: 50px;
   height: 50px;
   border-radius: 50%;
 `;
 
 const ResponseProfilePic = styled.img`
   width: 50px;
+  min-width: 50px;
   height: 50px;
   border-radius: 50%;
 `;
@@ -100,36 +102,40 @@ class ReviewEntry extends React.Component {
   render() {
     let response = '';
     if (this.props.reviewEntry.responses_id) {
-      response =        <ResponseBlock>
+      response = (
+        <ResponseBlock>
           <ResponseProfilePic src={this.props.hostInfo.host_pic} alt="" />
           <NameResponseDate>
-            <Name>
-              Response from 
-{' '}
-{this.props.hostInfo.host_name}
+    <Name>
+              Response from
+              {' '}
+              {this.props.hostInfo.host_name}
 :
-</Name>
-            <div>
+            </Name>
+    <div>
               {this.state.response}
             </div>
-            <ResponseDate>
+    <ResponseDate>
               {this.props.reviewEntry.date}
             </ResponseDate>
-          </NameResponseDate>
-        </ResponseBlock>;
+  </NameResponseDate>
+                </ResponseBlock>
+      );
     }
 
     let comment = <span>{this.props.reviewEntry.comment}</span>;
     if (this.props.reviewEntry.comment.length > 200) {
-      comment =        <span>
+      comment = (
+        <span>
           <span>
-            {this.props.reviewEntry.comment.slice(0, 200)}
+    {this.props.reviewEntry.comment.slice(0, 200)}
 ...
-</span>
+  </span>
           <ReadMore onClick={this.readMore}>
             Read more
-          </ReadMore>
-        </span>;
+  </ReadMore>
+                </span>
+      );
     }
     if (this.state.commentExpanded) {
       comment = <span>{this.props.reviewEntry.comment}</span>;
