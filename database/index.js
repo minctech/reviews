@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-  host: 'localhost',
+  host: '172.17.0.2', // change this for aws ec2 instance
   user: 'student',
   password: 'student',
   database: 'reviewsmodule',
