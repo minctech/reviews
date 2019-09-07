@@ -70,7 +70,7 @@ class ReviewEntry extends React.Component {
 
   componentDidMount() {
     let userID = this.props.reviewEntry.users_id;
-    axios.get(`http://localhost:3210/api/listings/users/${userID}`)
+    axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/users/${userID}`)
     .then(listingUser => {
       this.setState({
         user: listingUser.data[0]
@@ -83,7 +83,7 @@ class ReviewEntry extends React.Component {
 
     let responseID = this.props.reviewEntry.responses_id;
     if (responseID) {
-      axios.get(`http://localhost:3210/api/listings/review/response/${responseID}`)
+      axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/review/response/${responseID}`)
       .then(reviewResponse => {
         this.setState({
           response: reviewResponse.data[0].comment
