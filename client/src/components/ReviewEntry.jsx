@@ -13,6 +13,7 @@ const ResponseBlock = styled.div`
 
 const ProfilePic = styled.img`
   width: 50px;
+  height: 50px;
   border-radius: 50%;
 `;
 
@@ -58,54 +59,56 @@ class ReviewEntry extends React.Component {
     this.state = {
       user: {},
       response: '',
-      commentExpanded: false
+      commentExpanded: false,
     };
   }
 
   readMore() {
     this.setState({
-      commentExpanded: true
-    })
+      commentExpanded: true,
+    });
   }
 
   componentDidMount() {
-    let userID = this.props.reviewEntry.users_id;
+    const userID = this.props.reviewEntry.users_id;
     axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/users/${userID}`)
-    .then(listingUser => {
-      this.setState({
-        user: listingUser.data[0]
+      .then((listingUser) => {
+        this.setState({
+          user: listingUser.data[0],
+        });
       })
-    })
-    .catch(error => {
-      console.log(`AXIOS GET LISTING ${listingID}'S USER ERROR:`);
-      console.log(error);
-    })
+      .catch((error) => {
+        console.log(`AXIOS GET LISTING ${listingID}'S USER ERROR:`);
+        console.log(error);
+      });
 
-    let responseID = this.props.reviewEntry.responses_id;
+    const responseID = this.props.reviewEntry.responses_id;
     if (responseID) {
       axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/review/response/${responseID}`)
-      .then(reviewResponse => {
-        this.setState({
-          response: reviewResponse.data[0].comment
+        .then((reviewResponse) => {
+          this.setState({
+            response: reviewResponse.data[0].comment,
+          });
         })
-      })
-      .catch(error => {
-        console.log(`AXIOS GET REVIEW'S RESPONSE ERROR:`);
-        console.log(error);
-      })
+        .catch((error) => {
+          console.log('AXIOS GET REVIEW\'S RESPONSE ERROR:');
+          console.log(error);
+        });
     }
   }
 
   render() {
     let response = '';
     if (this.props.reviewEntry.responses_id) {
-      response =
-        <ResponseBlock>
-          <ResponseProfilePic src={this.props.hostInfo.host_pic} alt=""/>
+      response =        <ResponseBlock>
+          <ResponseProfilePic src={this.props.hostInfo.host_pic} alt="" />
           <NameResponseDate>
             <Name>
-              Response from {this.props.hostInfo.host_name}:
-            </Name>
+              Response from 
+{' '}
+{this.props.hostInfo.host_name}
+:
+</Name>
             <div>
               {this.state.response}
             </div>
@@ -113,29 +116,29 @@ class ReviewEntry extends React.Component {
               {this.props.reviewEntry.date}
             </ResponseDate>
           </NameResponseDate>
-        </ResponseBlock>
+        </ResponseBlock>;
     }
 
-    let comment = <span>{this.props.reviewEntry.comment}</span>
+    let comment = <span>{this.props.reviewEntry.comment}</span>;
     if (this.props.reviewEntry.comment.length > 200) {
-      comment =
-        <span>
+      comment =        <span>
           <span>
-            {this.props.reviewEntry.comment.slice(0, 200)}...
-          </span>
+            {this.props.reviewEntry.comment.slice(0, 200)}
+...
+</span>
           <ReadMore onClick={this.readMore}>
             Read more
           </ReadMore>
-        </span>
+        </span>;
     }
     if (this.state.commentExpanded) {
-      comment = <span>{this.props.reviewEntry.comment}</span>
+      comment = <span>{this.props.reviewEntry.comment}</span>;
     }
 
-    return(
+    return (
       <Block>
         <div>
-          <ProfilePic src={this.state.user.pic} alt=""/>
+          <ProfilePic src={this.state.user.pic} alt="" />
           <NameDate>
             <Name>
               {this.state.user.name}
@@ -151,9 +154,9 @@ class ReviewEntry extends React.Component {
         <div>
           {response}
         </div>
-        <br></br>
+        <br />
       </Block>
-    )
+    );
   }
 }
 
