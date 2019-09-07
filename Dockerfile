@@ -18,4 +18,4 @@ EXPOSE 3000
 
 # How do you start your app?
 CMD npm run seeder && \
-    npm run server-dev
+    node server/index.js
