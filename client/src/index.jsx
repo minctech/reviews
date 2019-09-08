@@ -20,101 +20,100 @@ class ReviewsModule extends React.Component {
     this.handleBackToAllReviews = this.handleBackToAllReviews.bind(this);
 
     this.state = {
-      reviews: [],          //arr of all reviews for a particular listing, can use length to show total # reviews
-      filteredReviews: [],  //arr of filtered reviews based on search bar
-      search: '',           //used to filter reviews
-      accuracy: 0,          //average of all accuracy ratings
-      communication: 0,     //average of all communication ratings
-      cleanliness: 0,       //average of all cleanliness ratings
-      location: 0,          //average of all location ratings
-      checkin: 0,           //average of all checkin ratings
-      value: 0,             //average of all value ratings
-      overall: 0,           //average of all the averages
-      host: {}              //listing's hosts's info (pic and name)
+      reviews: [], // arr of all reviews for a particular listing, can use length to show total # reviews
+      filteredReviews: [], // arr of filtered reviews based on search bar
+      search: '', // used to filter reviews
+      accuracy: 0, // average of all accuracy ratings
+      communication: 0, // average of all communication ratings
+      cleanliness: 0, // average of all cleanliness ratings
+      location: 0, // average of all location ratings
+      checkin: 0, // average of all checkin ratings
+      value: 0, // average of all value ratings
+      overall: 0, // average of all the averages
+      host: {}, // listing's hosts's info (pic and name)
 
     };
   }
 
-  //make a function to filter reviews based on state's search string
+  // make a function to filter reviews based on state's search string
   handleSearchSubmit(e) {
     e.preventDefault();
-    let input = $('#search-reviews').val();
-    let filter = this.state.reviews.filter(review => review.comment.includes(input));
-    this.setState(prevState => ({
+    const input = $('#search-reviews').val();
+    const filter = this.state.reviews.filter((review) => review.comment.includes(input));
+    this.setState((prevState) => ({
       filteredReviews: filter,
-      search: input
+      search: input,
     }));
   }
 
   handleBackToAllReviews() {
-    this.setState({filteredReviews: []});
+    this.setState({ filteredReviews: [] });
     $('#search-reviews').val('');
   }
 
   componentDidMount() {
-    //1. get all the reviews for a particular listing
-    let listingID = window.location.href.split('/').reverse()[1];
+    // 1. get all the reviews for a particular listing
+    const listingID = window.location.href.split('/').reverse()[1];
     axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/${listingID}/reviews`)
-    .then(listingReviews => {
-      //2. update the reviews state
-      this.setState({
-        reviews: listingReviews.data
-      });
-    })
-    .then(() => {
-      //3. update each rating's state
-      let accuracy = 0;
-      let communication = 0;
-      let cleanliness = 0;
-      let location = 0;
-      let checkin = 0;
-      let value = 0;
-      this.state.reviews.forEach((review) => {
-        accuracy += review.accuracy;
-        communication += review.communication;
-        cleanliness += review.cleanliness;
-        location += review.location;
-        checkin += review.checkin;
-        value += review.value;
-      });
-      let numReviews = this.state.reviews.length;
-      this.setState({
-        accuracy: Math.round(accuracy / numReviews * 2) / 2,
-        communication: Math.round(communication / numReviews * 2) / 2,
-        cleanliness: Math.round(cleanliness / numReviews * 2) / 2,
-        location: Math.round(location / numReviews * 2) / 2,
-        checkin: Math.round(checkin / numReviews * 2) / 2,
-        value: Math.round(value / numReviews * 2) / 2
+      .then((listingReviews) => {
+      // 2. update the reviews state
+        this.setState({
+          reviews: listingReviews.data,
+        });
       })
-    })
-    .then(() => {
-      //4. update the overall rating
-      let overall =
-        this.state.accuracy +
-        this.state.communication +
-        this.state.cleanliness +
-        this.state.location +
-        this.state.checkin +
-        this.state.value;
-      this.setState({
-        overall: Math.round(overall / 6 * 2) / 2
+      .then(() => {
+      // 3. update each rating's state
+        let accuracy = 0;
+        let communication = 0;
+        let cleanliness = 0;
+        let location = 0;
+        let checkin = 0;
+        let value = 0;
+        this.state.reviews.forEach((review) => {
+          accuracy += review.accuracy;
+          communication += review.communication;
+          cleanliness += review.cleanliness;
+          location += review.location;
+          checkin += review.checkin;
+          value += review.value;
+        });
+        const numReviews = this.state.reviews.length;
+        this.setState({
+          accuracy: Math.round(accuracy / numReviews * 2) / 2,
+          communication: Math.round(communication / numReviews * 2) / 2,
+          cleanliness: Math.round(cleanliness / numReviews * 2) / 2,
+          location: Math.round(location / numReviews * 2) / 2,
+          checkin: Math.round(checkin / numReviews * 2) / 2,
+          value: Math.round(value / numReviews * 2) / 2,
+        });
+      })
+      .then(() => {
+      // 4. update the overall rating
+        const overall = this.state.accuracy
+        + this.state.communication
+        + this.state.cleanliness
+        + this.state.location
+        + this.state.checkin
+        + this.state.value;
+        this.setState({
+          overall: Math.round(overall / 6 * 2) / 2,
+        });
+      })
+      .catch((error) => {
+        console.log(`AXIOS GET LISTING ${listingID}'S REVIEWS ERROR:`);
+        console.log(error);
       });
-    })
-    .catch(error => {
-      console.log(`AXIOS GET LISTING ${listingID}'S REVIEWS ERROR:`);
-      console.log(error);
-    })
 
     axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/${listingID}/host`)
-    .then(listingHost => {
-      this.setState({
-          host: listingHost.data[0]
+      .then((listingHost) => {
+        this.setState({
+          host: listingHost.data[0],
+        });
+      })
+      .catch((error) => {
+        console.log(`AXIOS GET LISTING ${listingID}'S HOST ERROR:`);
+        console.log(error);
       });
-    })
-    .catch(error => {
-      console.log(`AXIOS GET LISTING ${listingID}'S HOST ERROR:`);
-      console.log(error);
-    })
   }
 
   render() {
@@ -127,7 +126,7 @@ class ReviewsModule extends React.Component {
         />
         <ReviewList allStates={this.state} />
       </BaseStyle>
-    )
+    );
   }
 }
 

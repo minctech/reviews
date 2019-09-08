@@ -5,8 +5,10 @@ const port = 3210;
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const compression = require('compression');
 const db = require('../database/index.js');
 
+app.use(compression());
 app.use(cors());
 app.use(express.static(`${__dirname}/../client/dist`));
 app.use(morgan('dev'));
