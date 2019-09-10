@@ -1,4 +1,5 @@
 const express = require('express');
+const expressStaticGzip = require('express-static-gzip');
 
 const app = express();
 const port = 3210;
@@ -10,7 +11,14 @@ const db = require('../database/index.js');
 
 app.use(compression());
 app.use(cors());
-app.use(express.static(`${__dirname}/../client/dist`));
+// app.use(express.static(`${__dirname}/../client/dist`));
+app.use(expressStaticGzip(`${__dirname}/../client/dist`, {
+  enableBrotli: true,
+  orderPreference: ['br', 'gz'],
+  setHeaders (res, path) {
+    res.setHeader("Cache-Control", "public, max-age=31536000");
+  },
+}));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
