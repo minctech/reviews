@@ -40,6 +40,10 @@ CREATE TABLE reviews (
   FOREIGN KEY (responses_id) REFERENCES responses (id)
 )
 
-/*  Execute this file from the command line by typing:
- *    mysql -u <USER> -p < schema.sql
+/*  Restart MySQL by typing:
+ *    sudo service mysql restart
+ *  Create database/run schema by typing:
+ *    mysql -u student -p < schema.sql
+ *  Log into MySQL by typing:
+ *    mysql -u student -p
 */

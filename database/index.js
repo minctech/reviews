@@ -1,18 +1,13 @@
 const mysql = require('mysql');
 
-const connection = mysql.createConnection({ //docker exec -it mysql bash
-  host: '172.17.0.2', // change this for aws ec2 instance, docker network inspect bridge
+const connection = mysql.createConnection({ // docker exec -it mysql bash
+  host: 'localhost', // change this for aws ec2 instance, docker network inspect bridge
   user: 'root',
   password: 'password',
   database: 'reviewsmodule',
 });
 
 connection.connect();
-
-connection.query('SELECT 1 + 1 AS solution', (error, results, fields) => {
-  if (error) throw error;
-  console.log('The solution is: ', results[0].solution);
-});
 
 const getListingReviews = function (listingID, callback) {
   connection.query(`SELECT * FROM reviews WHERE listings_id = ${listingID}`, (error, results, fields) => {

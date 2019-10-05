@@ -17,11 +17,10 @@ module.exports = {
       minRatio: 0.7,
     }),
   ],
-  mode: 'production',
-  entry: `${__dirname}/client/src/index.jsx`,
+  entry: `${__dirname}/client/index.jsx`,
   output: {
     filename: 'bundle.js',
-    path: `${__dirname}/client/dist`,
+    path: `${__dirname}/public`,
   },
   module: {
     rules: [

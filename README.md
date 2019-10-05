@@ -6,7 +6,6 @@
 ## Related Projects
 
   - https://github.com/minctech/reviews
-  <!-- - https://github.com/teamName/repo -->
 
 ## Table of Contents
 

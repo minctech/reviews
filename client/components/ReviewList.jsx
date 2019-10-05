@@ -1,5 +1,6 @@
 import React from 'react';
 import ReviewEntry from './ReviewEntry.jsx';
+import styled from 'styled-components';
 
 class ReviewList extends React.Component {
   constructor(props) {

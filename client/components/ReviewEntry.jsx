@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 const Block = styled.div`
   padding: 25px 0 0 0;
@@ -73,27 +74,25 @@ class ReviewEntry extends React.Component {
 
   componentDidMount() {
     const userID = this.props.reviewEntry.users_id;
-    axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/users/${userID}`)
+    axios.get(`/api/listings/users/${userID}`)
       .then((listingUser) => {
         this.setState({
           user: listingUser.data[0],
         });
       })
       .catch((error) => {
-        console.log(`AXIOS GET LISTING ${listingID}'S USER ERROR:`);
         console.log(error);
       });
 
     const responseID = this.props.reviewEntry.responses_id;
     if (responseID) {
-      axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/review/response/${responseID}`)
+      axios.get(`/api/listings/review/response/${responseID}`)
         .then((reviewResponse) => {
           this.setState({
             response: reviewResponse.data[0].comment,
           });
         })
         .catch((error) => {
-          console.log('AXIOS GET REVIEW\'S RESPONSE ERROR:');
           console.log(error);
         });
     }
@@ -106,20 +105,17 @@ class ReviewEntry extends React.Component {
         <ResponseBlock>
           <ResponseProfilePic src={this.props.hostInfo.host_pic} alt="" />
           <NameResponseDate>
-    <Name>
-              Response from
-              {' '}
-              {this.props.hostInfo.host_name}
-:
+            <Name>
+              Response from {this.props.hostInfo.host_name}:
             </Name>
-    <div>
+            <div>
               {this.state.response}
             </div>
-    <ResponseDate>
+            <ResponseDate>
               {this.props.reviewEntry.date}
             </ResponseDate>
-  </NameResponseDate>
-                </ResponseBlock>
+          </NameResponseDate>
+        </ResponseBlock>
       );
     }
 
@@ -128,13 +124,12 @@ class ReviewEntry extends React.Component {
       comment = (
         <span>
           <span>
-    {this.props.reviewEntry.comment.slice(0, 200)}
-...
-  </span>
+            {this.props.reviewEntry.comment.slice(0, 200)}...
+          </span>
           <ReadMore onClick={this.readMore}>
             Read more
-  </ReadMore>
-                </span>
+          </ReadMore>
+        </span>
       );
     }
     if (this.state.commentExpanded) {

@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import $ from 'jquery';
-import Summary from './components/Summary.jsx';
-import ReviewList from './components/ReviewList.jsx';
+import Summary from './Summary.jsx';
+import ReviewList from './ReviewList.jsx';
+import styled from 'styled-components';
 
 const BaseStyle = styled.div`
   width: 648px;
@@ -12,7 +12,7 @@ const BaseStyle = styled.div`
   padding: 0 0 0 10%;
 `;
 
-class ReviewsModule extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -39,22 +39,24 @@ class ReviewsModule extends React.Component {
   handleSearchSubmit(e) {
     e.preventDefault();
     const input = $('#search-reviews').val();
-    const filter = this.state.reviews.filter((review) => review.comment.includes(input));
-    this.setState((prevState) => ({
+    const filter = this.state.reviews.filter(review => review.comment.includes(input));
+    this.setState({
       filteredReviews: filter,
-      search: input,
-    }));
+      search: input
+    });
   }
 
   handleBackToAllReviews() {
-    this.setState({ filteredReviews: [] });
+    this.setState({
+      filteredReviews: []
+    });
     $('#search-reviews').val('');
   }
 
   componentDidMount() {
     // 1. get all the reviews for a particular listing
     const listingID = window.location.href.split('/').reverse()[1];
-    axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/${listingID}/reviews`)
+    axios.get(`/api/listings/${listingID}/reviews`)
       .then((listingReviews) => {
       // 2. update the reviews state
         this.setState({
@@ -100,18 +102,16 @@ class ReviewsModule extends React.Component {
         });
       })
       .catch((error) => {
-        console.log(`AXIOS GET LISTING ${listingID}'S REVIEWS ERROR:`);
         console.log(error);
       });
 
-    axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/${listingID}/host`)
+    axios.get(`/api/listings/${listingID}/host`)
       .then((listingHost) => {
         this.setState({
           host: listingHost.data[0],
         });
       })
       .catch((error) => {
-        console.log(`AXIOS GET LISTING ${listingID}'S HOST ERROR:`);
         console.log(error);
       });
   }
@@ -130,4 +130,4 @@ class ReviewsModule extends React.Component {
   }
 }
 
-ReactDOM.render(<ReviewsModule />, document.getElementById('reviews'));
+export default App;
