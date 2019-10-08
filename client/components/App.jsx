@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Summary from './Summary.jsx';
 import ReviewList from './ReviewList.jsx';
 import styled from 'styled-components';
+import ReactPaginate from 'react-paginate';
 
 const BaseStyle = styled.div`
   width: 648px;
@@ -18,20 +19,23 @@ class App extends React.Component {
 
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.handleBackToAllReviews = this.handleBackToAllReviews.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
 
     this.state = {
-      reviews: [], // arr of all reviews for a particular listing, can use length to show total # reviews
-      filteredReviews: [], // arr of filtered reviews based on search bar
-      search: '', // used to filter reviews
-      accuracy: 0, // average of all accuracy ratings
-      communication: 0, // average of all communication ratings
-      cleanliness: 0, // average of all cleanliness ratings
-      location: 0, // average of all location ratings
-      checkin: 0, // average of all checkin ratings
-      value: 0, // average of all value ratings
-      overall: 0, // average of all the averages
-      host: {}, // listing's hosts's info (pic and name)
-
+      reviews: [],          // arr of all reviews for a particular listing, can use length to show total # reviews
+      filteredReviews: [],  // arr of filtered reviews based on search bar
+      pageCount: 0,         // number of review pages
+      perPage: 7,           // number of reviews per page
+      elements: [],         // contains up to 7 reviews starting from offset
+      search: '',           // used to filter reviews
+      accuracy: 0,          // average of all accuracy ratings
+      communication: 0,     // average of all communication ratings
+      cleanliness: 0,       // average of all cleanliness ratings
+      location: 0,          // average of all location ratings
+      checkin: 0,           // average of all checkin ratings
+      value: 0,             // average of all value ratings
+      overall: 0,           // average of all the averages
+      host: {},             // listing's hosts's info (pic and name)
     };
   }
 
@@ -53,18 +57,32 @@ class App extends React.Component {
     $('#search-reviews').val('');
   }
 
+  handlePageClick(pageNumber) {
+    let offset = pageNumber.selected * this.state.perPage;
+    this.setState({
+      elements: this.state.reviews.slice(offset, offset + this.state.perPage)
+    });
+  }
+
   componentDidMount() {
     // 1. get all the reviews for a particular listing
     const listingID = window.location.href.split('/').reverse()[1];
     axios.get(`/api/listings/${listingID}/reviews`)
       .then((listingReviews) => {
-      // 2. update the reviews state
+        // 2. update the reviews state with all the reviews
         this.setState({
           reviews: listingReviews.data,
+          pageCount: Math.ceil(listingReviews.data.length / this.state.perPage)
         });
       })
       .then(() => {
-      // 3. update each rating's state
+        // 3. update the elements state with the first 7 reviews
+        this.setState({
+          elements: this.state.reviews.slice(0, this.state.perPage)
+        });
+      })
+      .then(() => {
+        // 4. update each rating's state
         let accuracy = 0;
         let communication = 0;
         let cleanliness = 0;
@@ -90,7 +108,7 @@ class App extends React.Component {
         });
       })
       .then(() => {
-      // 4. update the overall rating
+        // 5. update the overall rating
         const overall = this.state.accuracy
         + this.state.communication
         + this.state.cleanliness
@@ -125,6 +143,22 @@ class App extends React.Component {
           backToAllReviews={this.handleBackToAllReviews}
         />
         <ReviewList allStates={this.state} />
+        <ReactPaginate
+          pageCount={this.state.pageCount}            // The total number of pages.
+          pageRangeDisplayed={3}                      // The range of pages displayed.
+          marginPagesDisplayed={1}                    // The number of pages to display for margins.
+          previousLabel={'<'}                         // Label for the previous button.
+          nextLabel={'>'}                             // Label for the next button.
+          breakLabel={'...'}                          // Label for ellipsis.
+          breakClassName={'break'}                    // The classname on tag li of the ellipsis element.
+          onPageChange={this.handlePageClick}         // The method to call when a page is clicked. Exposes the current page object as an argument.
+          containerClassName={'pagination'}           // The classname of the pagination container.
+          pageClassName={'page'}                      // The classname on tag li of each page element.
+          activeClassName={'active'}                  // The classname for the active page.
+          previousClassName={'previous'}              // The classname on tag li of the previous button.
+          nextClassName={'next'}                      // The classname on tag li of the next button.
+          subContainerClassName={'pages-pagination'}  // ??
+        />
       </BaseStyle>
     );
   }

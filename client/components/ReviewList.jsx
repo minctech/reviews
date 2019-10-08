@@ -1,6 +1,5 @@
 import React from 'react';
 import ReviewEntry from './ReviewEntry.jsx';
-import styled from 'styled-components';
 
 class ReviewList extends React.Component {
   constructor(props) {
@@ -8,7 +7,7 @@ class ReviewList extends React.Component {
   }
 
   render() {
-    let displayReviews = this.props.allStates.reviews;
+    let displayReviews = this.props.allStates.elements;
 
     if (this.props.allStates.filteredReviews.length > 0) {
       displayReviews = this.props.allStates.filteredReviews;

@@ -1,0 +1,25 @@
+.pagination {
+  color: #008489;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-evenly; */
+  list-style-type: none;
+  padding: 0;
+}
+
+.page, .previous {
+  margin-right: 50px;
+}
+
+.break {
+  color: black;
+}
+
+/*
+containerClassName={'pagination'}           // The classname of the pagination container.
+pageClassName={'page'}                      // The classname on tag li of each page element.
+activeClassName={'active'}                  // The classname for the active page.
+previousClassName={'previous'}              // The classname on tag li of the previous button.
+nextClassName={'next'}                      // The classname on tag li of the next button.
+subContainerClassName={'pages-pagination'}  // ??
+*/
