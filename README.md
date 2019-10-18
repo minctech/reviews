@@ -2,7 +2,7 @@
 
 Reviews list microservice for lodging and hotel web application. Built with React, Express, and MySQL. Supports pagination and filtering based on terms searched.
 
-![](https://i.imgur.com/HeaKibu.gifv)
+![](https://i.imgur.com/HeaKibu.gif)
 
 ## Related Projects
 
