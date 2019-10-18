@@ -1,28 +1,28 @@
-# Project Minc Tech Airbnb
+# Reviews - MincTech
 
-> Project description
-> - This is a mock up of an Airbnb listings page
+Reviews list microservice for lodging and hotel web application. Built with React, Express, and MySQL. Supports pagination and filtering based on terms searched.
+
+![](https://i.imgur.com/HeaKibu.gifv)
 
 ## Related Projects
 
-  - https://github.com/minctech/reviews
+  - https://github.com/minctech/
+  - https://github.com/minctech/images
+  - https://github.com/minctech/reservations
 
 ## Table of Contents
 
 1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+2. [Requirements](#requirements)
+3. [Development](#development)
 
 ## Usage
 
-> Some usage instructions
+Explore the list of reviews by clicking on the pagination tabs. Filter reviews by utilizing the search bar.
 
 ## Requirements
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 12.8.0
-- etc
+- Node 10.15.3 or higher
 
 ## Development
 
@@ -31,46 +31,8 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 From within the root directory:
 
 ```sh
-make sure you have your project\'s file structure \\set up as follows:
-your-project
-  -> client
-    -> dist
-      -> index.html
-    -> src
-      -> components
-        -> Component1.jsx
-      -> index.jsx
-
-npm install webpack --save-dev
-npm install webpack-cli --save-dev
-
-add \"react-dev\": \"webpack -d --watch\" to scripts \\in package.json
-
-npm install babel-loader @babel/core @babel/preset-env @babel/preset-react --save-dev
-
-create webpack.config.js and add:
-module.exports = {
-  entry: __dirname + '/client/src/index.jsx',
-  module: {
-    rules: [
-      {
-        test: [/\.jsx$/],
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-react', '@babel/preset-env']
-          }
-        }
-      }
-    ]
-  },
-    output: {
-    filename: 'bundle.js',
-    path: __dirname + '/client/dist'
-  }
-};
-
-npm run react-dev
+npm install
+npm run seed
+npm run build
+npm run start (in a seperate terminal window)
 ```
-
