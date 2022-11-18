@@ -75,6 +75,6 @@
     "jest-enzyme": "^7.1.0",
     "prop-types": "^15.7.2",
     "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.8"
+    "webpack-cli": "^3.3.12"
   }
 }
